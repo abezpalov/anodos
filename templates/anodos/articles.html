@@ -1,0 +1,86 @@
+{% extends "main.html" %}
+{% block title %}Anodos: Статьи{% endblock %}
+{% block content %}
+{% if perms.anodos.change_article %}
+
+
+<!-- Панель кнопок -->
+<div class="row collapse">
+	<ul class="button-group even-2">
+		<li><button data-do="open-new-article" class="secondary"><i class="fa fa-pencil"></i> Написать статью</button></li>
+		<li><button data-do="open-new-document" class="secondary"><i class="fa fa-upload"></i> Загрузить файл</button></li>
+	</ul>
+</div>
+
+
+<!-- Таблица со списком статей -->
+<div class="row collapse">
+	<table>
+		<tr>
+			<th class="text-center">#</th>
+			<th>Заголовок</th>
+			<th>Статус</th>
+			<th>Автор</th>
+			<th>Дата создания</th>
+		</tr>
+		{% for article in articles %}
+		<tr>
+			<td>{{ forloop.counter }}</td>
+			<td><a id="article-{{ article.id }}" href="/article/{{ article.id }}/" data-do="open-edit-article" data-id="{{ article.id }}">{{ article.title }}</a></td>
+			<td>
+				<div class="switch small">
+					<input id="article-state-{{ article.id }}" data-id="{{ article.id }}" data-do="switch-article-state" type="checkbox"{% if article.state %} checked{% endif %}>
+					<label for="article-state-{{ article.id }}"></label>
+				</div>
+			</td>
+			<td>{{ article.created_by }}</td>
+			<td>{{ article.created|date:"d.m.Y H.i" }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+
+
+<!-- Модальное окно редактирования статьи -->
+{% include "anodos/modal/edit-article.html" %}
+
+
+<!-- Модальное окно добавления файла -->
+<div id="modal-add-document" class="reveal-modal large" data-reveal>
+	<h2>Загрузить файл</h2>
+	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+	<input type="hidden" name="id" value="0">
+	<textarea name=""></textarea>
+	<button class="alert"><i class="fa fa-ok"></i>&nbsp;Выйти</button>
+	<button data-do="profile-modal-cancel" class="secondary">Отмена</button>
+	<a class="close-reveal-modal">&#215;</a>
+</div>
+
+
+<!-- Модальное окно удаления статьи -->
+<div id="modal-trash-article" class="reveal-modal large" data-reveal>
+	<h2>Удалить статью?</h2>
+	<!-- TODO Заголовок, автор, дата -->
+	<input id="trash-article-id" type="hidden" value="0">
+	<button data-do="trash-article" class="alert"><i class="fa fa-trash"></i>&nbsp;Удалить</button>
+	<button data-do="profile-modal-cancel" class="secondary">Отмена</button>
+	<a class="close-reveal-modal">&#215;</a>
+</div>
+
+
+
+{% else %}
+<div class="row collapse">
+	<div class="small-12 columns">
+		<p class="panel">Недостаточно прав для данной функциональности.</p>
+	</div>
+</div>
+{% endif %}
+{% endblock %}
+
+
+{% block js-content %}
+<script>
+{% include "anodos/js/edit-article.js" %}
+</script>
+{% endblock %}

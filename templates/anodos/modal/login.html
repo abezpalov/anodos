@@ -1,0 +1,122 @@
+{% if user.is_authenticated %}
+<div id="modal-profile" class="reveal" data-reveal>
+
+	<form action="/logout/" method="post">
+
+		<input type="hidden" name="redirect" value="{{ request.path }}">
+		<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+        <hr/>
+
+        <div class="button-group">
+            <a class="button alert">Выйти</a>
+            <a class="button secondary" data-do="profile-cancel">Отменить</a>
+        </div>
+
+	</form>
+
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+
+</div>
+
+{% else %}
+
+<div id="modal-login" class="reveal" data-reveal>
+
+	<form method="post">
+
+		<fieldset>
+
+			<legend>Войти</legend>
+			<label>Имя пользователя
+				<input
+					id          = "login-username"
+					name        = "username"
+					type        = "text"
+					placeholder = "login">
+			</label>
+			<label>Пароль
+				<input
+					id          = "login-password"
+					name        = "password"
+					type        = "password"
+					placeholder = "password">
+			</label>
+		</fieldset>
+
+		<div id = "modal-login-alert"></div>
+
+		<p><a data-do = "login-restore-password">Восстановить пароль.</a></p>
+		<button data-do = "login-apply">Войти</button>
+		<button data-do = "login-cancel" class="secondary">Отмена</button>
+	</form>
+	<a class="close-reveal-modal">&#215;</a>
+</div>
+
+<!-- Модальное окно регистрации -->
+<div id="modal-register" class="reveal-modal large" data-reveal>
+	<form method="post">
+		<fieldset>
+			<legend>Зарегистрироваться</legend>
+
+			<label>Имя
+				<input
+					id          = "register-firstname"
+					name        = "firstname"
+					type        = "text"
+					placeholder = "First Name">
+			</label>
+
+			<label>Фамилия
+				<input
+					id          = "register-lastname"
+					name        = "lastname"
+					type        = "text"
+					placeholder = "Last Name">
+			</label>
+
+			<label>Имя пользователя
+				<input
+					id          = "register-username"
+					name        = "username"
+					type        = "text"
+					placeholder = "firstname.lastname">
+			</label>
+
+			<label>Электронная почта
+				<input
+					id          = "register-email"
+					name        = "email"
+					type        = "email"
+					placeholder = "your@email.ru">
+			</label>
+
+			<label>Пароль
+				<input
+					id          = "register-password1"
+					name        = "password1"
+					type        = "password"
+					placeholder = "Password">
+			</label>
+
+			<label>Повторите пароль
+				<input
+					id          = "register-password2"
+					name        = "password2"
+					type        = "password"
+					placeholder = "Password">
+			</label>
+		</fieldset>
+
+		<div id = "modal-register-alert"></div>
+
+		<p><a data-do = "view-license">Лицензионное соглашение.</a></p>
+		<button data-do = "register-apply">Зарегистрироваться</button>
+		<button data-do = "register-cancel" class="secondary">Отмена</button>
+	</form>
+	<a class = "close-reveal-modal">&#215;</a>
+</div>
+
+{% endif %}

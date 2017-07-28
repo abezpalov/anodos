@@ -1,0 +1,94 @@
+{% if perms.anodos.add_article or perms.anodos.change_article %}
+<div id="modal-edit-article" class="reveal-modal large" data-reveal>
+	<dl class="tabs" data-tab>
+		<dd id="modal-edit-article-content-dd" class="active"><a href="#modal-edit-article-content">Содержание</a></dd>
+		<dd id="modal-edit-article-desc-dd"><a href="#modal-edit-article-desc">Описание</a></dd>
+		<dd id="modal-edit-article-meta-dd"><a href="#modal-edit-article-meta">Служебное</a></dd>
+	</dl>
+	<div class="tabs-content">
+		<div id="modal-edit-article-content" class="content active">
+
+			<input id="edit-article-id" type="hidden" value="0">
+
+			<label>Заголовок
+				<input id="edit-article-title" type="text" value="">
+			</label>
+
+			<label>Содержание
+				<textarea id="edit-article-content"></textarea>
+			</label>
+
+		</div>
+		<div id="modal-edit-article-desc" class="content">
+
+			<label>Псевдоним
+				<input id="edit-article-alias" type="text" value="">
+			</label>
+
+			<label>Путь
+				<input id="edit-article-patch" type="text" value="">
+			</label>
+
+			<label>Предпросмотр
+				<input id="edit-article-thumb_src" type="text" value="">
+			</label>
+
+			<label>Вступительный текст
+				<textarea id="edit-article-intro"></textarea>
+			</label>
+
+			<label>Описание
+				<textarea id="edit-article-description"></textarea>
+			</label>
+
+			<label>Категория
+				<select id="edit-article-category">
+					<option value="0" selected> - Не определена - </option>
+					{% for category in categories %}
+					<option value="{{ category.id }}">{{ category.name }}</option>
+					{% endfor %}
+				</select>
+			</label>
+
+			<label>Язык
+				<select id="edit-article-language">
+					<option value="0" selected> - Не определён - </option>
+					{% for language in languages %}
+					<option value="{{ language.id }}">{{ language.name }}</option>
+					{% endfor %}
+				</select>
+			</label>
+
+			<label>Источник
+				<input id="edit-article-source" type="text" value="">
+			</lable>
+
+			<lable>Ссылка на источник
+				<input id="edit-article-source_url" type="text" value="">
+			</lable>
+
+		</div>
+		<div id="modal-edit-article-meta" class="content">
+
+			<label>Статус
+				<div class="switch small">
+					<input id="edit-article-state" type="checkbox">
+					<label for="edit-article-state"></label>
+				</div>
+			</label>
+
+			<label>На главной
+				<div class="switch small">
+					<input id="edit-article-on_main" type="checkbox">
+					<label for="edit-article-on_main"></label>
+				</div>
+			</label>
+
+		</div>
+	</div>
+
+	<button data-do="edit-article-save" class="primary"><i class="fa fa-ok"></i>&nbsp;Сохранить</button>
+	<button data-do="edit-article-cancel" class="secondary">Отмена</button>
+	<a class="close-reveal-modal">&#215;</a>
+</div>
+{% endif %}

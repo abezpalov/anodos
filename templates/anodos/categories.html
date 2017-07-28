@@ -1,0 +1,113 @@
+{% extends "main.html" %}
+{% block title %}Anodos: Категории статей{% endblock %}
+
+{% block search %}
+<li class="divider"></li>
+<li class="has-form">
+	<div class="row collapse">
+		<div class="large-10 small-9 columns">
+			<input id="top-search-input" type="text" placeholder="Поиск по складу..." value="">
+		</div>
+		<div class="large-2 small-3 columns">
+			<button id="top-search-button" class="secondary expand"><i class="fa fa-search"></i></button>
+		</div>
+	</div>
+</li>
+{% endblock %}
+
+{% block content %}
+{% if perms.anodos.change_category %}
+
+<!-- Форма добавления новой категории -->
+<div class="row collapse">
+	<div class="small-5 columns">
+		<input id="new-category-name" type="text" placeholder="Имя новой категории">
+	</div>
+	<div class="small-5 columns">
+		<select id="new-category-parent">
+			<option value="null" selected>Корневая категория</option>
+			{% for parent in categories %}
+			<option value="{{ parent.id }}">{{ parent.name }}</option>
+			{% endfor %}
+		</select>
+	</div>
+	<div class="small-2 columns">
+		<button data-do="add-category" class="postfix">
+			<i class="fa fa-plus">
+				<span class="hide-for-small-only">&nbsp;Добавить</span>
+			</i>
+		</button>
+	</div>
+</div>
+
+<!-- Таблица со списком категорий -->
+<div class="row collapse">
+	<table>
+		<tr>
+			<th class="text-center">#</th>
+			<th>Наименование</th>
+			<th>Статус</th>
+			<th class="hide-for-small-only">Управление</th>
+		</tr>
+		{% for category in categories %}
+		<tr>
+			<td>{{ forloop.counter }}</td>
+			<td><a id="category-{{ category.id }}" data-do="edit-category" data-id="{{ category.id }}" data-alias="{{ category.alias }}">{{ category.name }}</a></td>
+			<td>
+				<div class="switch small">
+					<input id="category-state-{{ category.id }}" data-id="{{ category.id }}" data-do="switch-item-state" type="checkbox"{% if category.state %} checked{% endif %}>
+					<label for="category-state-{{ category.id }}"></label>
+				</div>
+			</td>
+			<td class="hide-for-small-only">
+				<div class="row">
+					<div class="small-10 columns">
+						<select>
+							<option value="null">Корневая категория</option>
+							{% for parent in categories %}
+							<option value="{{ parent.id }}"{% if item.parent.id == parent.id %} selected{% endif %}>{{ parent.name }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="small-2 columns">
+						<button class="tiny alert" data-do="trash-category" data-id="{{ category.id }}">
+							<i class="fa fa-trash"></i>
+						</button>
+					</div>
+				</div>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+
+<!-- Модальное окно редактирования категории -->
+<div id="EditCategoryModal" class="reveal-modal large" data-reveal>
+	<fieldset>
+		<legend>Редактировать категорию</legend>
+		<input id="edit-category-id" type="hidden">
+		<label>Наименование
+			<input id="edit-category-name" type="text">
+		</label>
+		<label>Псевдоним
+			<input id="edit-category-alias" type="text">
+		</label>
+	</fieldset>
+	<button data-do="edit-category-save">Сохранить</button>
+	<button data-do="edit-category-cancel" class="secondary">Отменить</button>
+</div>
+{% else %}
+<div class="row collapse">
+	<div class="small-12 columns">
+		<p class="panel">Недостаточно прав для данной функциональности.</p>
+	</div>
+</div>
+{% endif %}
+{% endblock %}
+{% block js-content %}
+{% if perms.anodos.change_category %}
+<script>
+{% include "content/js/edit-categories.js" %}
+</script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "main.html" %}
+{% block title %}Anodos: {{ article.title}}{% endblock %}
+{% block content %}
+
+{% if article.state or perms.anodos.change_article %}
+<div class="row">
+
+	<div {% if aside or perms.anodos.add_article or perms.anodos.change_article %}class="large-9 medium-8 columns"{% else %}class="large-12 columns"{% endif %}>
+		<h3>{{ article.title}}</h3>
+		<div>{% autoescape off %}{{ article.content }}{% endautoescape %}</div>
+	</div>
+
+	{% if aside or perms.anodos.add_article or perms.anodos.change_article %}
+	<div class="large-3 medium-4 columns">
+
+		<!-- TODO -->
+		<div>Тест: вторичный контент и реклама.</div>
+		<div>Тест: вторичный контент и реклама.</div>
+		<div>Тест: вторичный контент и реклама.</div>
+
+		{% if perms.anodos.add_article %}
+		<button data-do="open-new-article" class="secondary expand"><i class="fa fa-pencil"></i> Написать статью</button>
+		{% endif %}
+		{% if perms.anodos.change_article %}
+		<button data-do="open-edit-article" data-id="{{ article.id }}" class="secondary expand"><i class="fa fa-pencil"></i> Редактировать статью</button>
+		{% endif %}
+		{% if perms.anodos.add_document %}
+		<button data-do="open-new-document" data-id="{{ article.id }}" class="secondary expand"><i class="fa fa-upload"></i> Загрузить файл</button>
+		{% endif %}
+
+	</div>
+	{% endif %}
+
+</div>
+
+{% else %}
+<div class="row collapse">
+	<div class="small-12 columns">
+		<p class="panel">Статья в черновике.</p>
+	</div>
+</div>
+{% endif %}
+
+{% include "anodos/modal/edit-article.html" %}
+
+{% endblock %}
+
+{% block js-content %}
+<script>
+{% include "anodos/js/edit-article.js" %}
+</script>
+{% endblock %}

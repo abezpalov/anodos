@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Anodos{% endblock %}</title>
+
+    <!-- Foundation -->
+    <link rel="stylesheet" href="/static/css/foundation/foundation.min.css">
+    <link rel="stylesheet" href="/static/css/foundation/app.css">
+    <!--[if lt IE 9]>
+    <link href="0cb6f571-sd.css" rel="stylesheet">
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Base Template -->
+    <link rel="stylesheet" href="/static/css/template.css">
+
+    <!-- Fort Awesome -->
+    <script defer src="/static/js/packs/light.js"></script>
+    <script defer src="/static/js/fontawesome.js"></script>
+</head>
+<body>
+
+<header>
+
+<!-- Логотип -->
+<div class="row hide-for-small-only">
+    <div class="medium-6 large-4 columns"><h1><a href="/">Anodos</a></h1></div>
+    <div class="medium-6 large-8 columns text-right">
+        {% if user.is_authenticated %}
+        <p><a data-do = "open-profile">{{ user.first_name }} {{ user.last_name }}</a>, вы авторизованы.</p>
+        {% else %}
+        <p>Желаете <a data-do = "open-login">авторизоваться</a> или <a data-do = "open-register">зарегистрироваться</a>?</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+<div class="top-bar">
+    <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+            <li class="show-for-small-only" class="menu-text">Anodos</li>
+            <li><a href="/blog/">Блог</a></li>
+            <li><a href="/solutions/">Решения</a></li>
+            <li><a href="/catalog/">Товары и услуги</a></li>
+
+            {% if perms.catalog.change_product %}
+            <li class="has-submenu">
+                <a href="#">Настройки</a>
+                <ul class="submenu menu vertical" data-submenu>
+                    <li><a href="/catalog/manage/updaters/">Загрузчики и поставщики</a></li>
+                    <li><a href="/catalog/manage/vendors/">Производители</a></li>
+                    <li><a href="/catalog/manage/categories/">Категории и товары</a></li>
+                    <li><a href="/catalog/manage/pricetypes/">Цены</a></li>
+                </ul>
+            </li>
+            {% endif %}
+            {% if perms.anodos.change_article %}
+            <li class="has-submenu">
+                <a href="#">Контент</a>
+                <ul class="submenu menu vertical" data-submenu>
+                    <li><a href="/articles/">Документы и статьи</a></li>
+                    <li><a href="/categories/">Категории</a></li>
+                    <li><a href="/doc-types/">Типы документов</a></li>
+                    <li><a href="/languages/">Языки</a></li>
+                    <li><a href="/logs/">Логи</a></li>
+                    </ul>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+            {% block search %}
+            <li><input type="text" placeholder="Найти..." /></li>
+            <li><button type="button" class="button">Найти</button></li>
+            {% endblock %}
+        </ul>
+    </div>
+</div>
+</div>
+
+
+<!-- Крошки -->
+<div class="row">
+&nbsp;
+</div>
+
+</header>
+
+<main>
+{% block content %}<div class="row">&nbsp;</div>{% endblock %}
+</main>
+
+<footer class="row">
+    <div class="large-12 columns">
+    <hr />
+    <div class="row">
+        <div class="large-12 columns text-center">&copy;&nbsp;<a href="mailto:root@anodos.ru">Андрей Безпалов</a></div>
+    </div>
+</footer>
+
+{% include "anodos/modal/login.html" %}
+
+<script src="/static/js/foundation/vendor/jquery.js"></script>
+<script src="/static/js/foundation/vendor/what-input.js"></script>
+<script src="/static/js/foundation/vendor/foundation.js"></script>
+<script src="/static/js/foundation/app.js"></script>
+<script>
+{% include "anodos/js/login.js" %}
+</script>
+
+{% block js-content %}
+{% endblock %}
+
+</body>
+</html>

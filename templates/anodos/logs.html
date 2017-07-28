@@ -1,0 +1,41 @@
+{% extends "main.html" %}
+{% block title %}Anodos: Логи{% endblock %}
+{% block content %}
+{% if perms.anodos.change_log %}
+
+
+<!-- Таблица со списком объектов -->
+<div class="row collapse">
+	<table>
+		<tr>
+			<th>Субъект</th>
+			<th>Канал</th>
+			<th>Заголовок</th>
+			<th>Описание</th>
+			<th>Дата создания</th>
+		</tr>
+		{% for log in logs %}
+		<tr>
+			<td>{{ log.subject }}</td>
+			<td>{{ log.channel }}</td>
+			<td>{{ log.title }}</td>
+			<td>{{ log.description }}</td>
+			<td>{{ log.created|date:"d.m.Y H.i" }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+
+{% else %}
+<div class="row collapse">
+	<div class="small-12 columns">
+		<p class="panel">Недостаточно прав для данной функциональности.</p>
+	</div>
+</div>
+{% endif %}
+{% endblock %}
+
+
+{% block js-content %}
+
+{% endblock %}

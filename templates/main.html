@@ -74,10 +74,7 @@
     </div>
     <div class="top-bar-right">
         <ul class="menu">
-            {% block search %}
-            <li><input type="text" placeholder="Найти..." /></li>
-            <li><button type="button" class="button">Найти</button></li>
-            {% endblock %}
+            {% block search %}{% include "catalog/search-on-stocks.html" %}{% endblock %}
         </ul>
     </div>
 </div>
@@ -114,6 +111,9 @@
 </script>
 
 {% block js-content %}
+<script>
+{% include "catalog/js/search-on-stocks.js" %}
+</script>
 {% endblock %}
 
 </body>

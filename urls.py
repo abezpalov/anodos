@@ -9,7 +9,6 @@ urlpatterns = [
 
 	url(r'^$', anodos.views.home),
 	url(r'^catalog/', include('catalog.urls')),
-	url(r'^tenders/', include('tenders.urls')),
 	url(r'^admin/', include(admin.site.urls)),
 
 	url(r'^articles/$', anodos.views.articles),
@@ -32,5 +31,7 @@ urlpatterns = [
 
 	url(r'^ajax/create-username/$', anodos.views.ajax_create_username),
 	url(r'^ajax/register/$', anodos.views.ajax_register),
+
+    url(r'^(?P<string>[\S\s]*)$', anodos.views.content),
 
 ]

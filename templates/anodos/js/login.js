@@ -135,7 +135,9 @@ $("body").delegate("[data-do='register-apply']", "click", function(){
 });
 
 
-$("body").delegate("[data-do*='open-profile']", "click", function(){
-	$('#modal-profile').foundation('open');
-	return false;
+
+$("body").delegate("[data-do*='open-profile']", "click", function(e){
+var $profile = k$.modal(".profile");
+    $($profile).show();
+    e.stopPropagation();
 });

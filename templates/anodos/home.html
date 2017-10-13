@@ -4,18 +4,6 @@
 
 {% block content %}
 <div class="row">
-	<div class="large-8 medium-6 columns">
-		{% for article in articles %}
-		<div>
-			<h3><a href="article/{{ article.id }}">{{ article.title}}</a></h3>
-			<p>{% autoescape off %}{{ article.intro}}{% endautoescape %}</p>
-		</div>
-		{% endfor %}
-	</div>
-	<div class="large-4 medium-6 columns">
-		<div>Тест: вторичный контент и реклама.</div>
-		<div>Тест: вторичный контент и реклама.</div>
-		<div>Тест: вторичный контент и реклама.</div>
-	</div>
+
 </div>
 {% endblock %}

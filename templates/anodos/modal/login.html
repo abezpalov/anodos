@@ -1,5 +1,35 @@
+<!-- Просмотр и редактирование своего профиля -->
 {% if user.is_authenticated %}
-<div id="modal-profile" class="reveal" data-reveal>
+<div id="modal-profile" class="ui modal">
+  <i class="close icon"></i>
+
+  <div id="modal-profile-header" class="header">Профиль пользователя</div>
+
+  <div class="content">
+    <div class="ui top attached tabular menu">
+      <a class="item active" data-tab="view">Просмотр</a>
+      <a class="item" data-tab="edit">Редактирование</a>
+    </div>
+
+    <div class="ui bottom attached tab segment active" data-tab="view">
+      <div class="ui grid">
+        <div class="four wide column">
+          <img src="" id="view-profile-img" class="ui image">
+        </div>
+        <div class="twelve wide column">
+          <p>Name</p>
+          <p id="view--description">Description</p>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
 
 	<form action="/logout/" method="post">
 

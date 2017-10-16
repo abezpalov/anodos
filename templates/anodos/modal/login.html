@@ -1,5 +1,6 @@
-<!-- Просмотр и редактирование своего профиля -->
 {% if user.is_authenticated %}
+
+<!-- Просмотр и редактирование своего профиля -->
 <div id="modal-profile" class="ui modal">
   <i class="close icon"></i>
 
@@ -10,143 +11,113 @@
       <a class="item active" data-tab="view">Просмотр</a>
       <a class="item" data-tab="edit">Редактирование</a>
     </div>
-
     <div class="ui bottom attached tab segment active" data-tab="view">
       <div class="ui grid">
         <div class="four wide column">
-          <img src="" id="view-profile-img" class="ui image">
+          <img src="" id="view-profile-img" class="circular image">
         </div>
         <div class="twelve wide column">
           <p>Name</p>
-          <p id="view--description">Description</p>
+          <p>Description?</p>
         </div>
       </div>
     </div>
+    <div class="ui bottom attached tab segment" data-tab="edit">
+      TODO<!-- TODO Edit profile -->
+    </div>
+  </div>
+  <div class="actions">
+    <div data-do="edit-product-save" class="ui positive button">
+      <i class="icon far fa-save"></i>Сохранить
+    </div>
+    <div data-do="apply-logout" class="ui red deny button">
+      <i class="icon far fa-sign-out"></i>Выйти
+    </div>
+    <div class="ui black deny button">
+      <i class="icon far fa-ban"></i>Отмена
+    </div>
+  </div>
+</div>
 
+<!-- Регистрации -->
+<div id="modal-register" class="ui modal">
+  <i class="close icon"></i>
 
+  <div id="modal-login-header" class="header">Регистрация</div>
 
-
-
-
-
-
-
-	<form action="/logout/" method="post">
-
-		<input type="hidden" name="redirect" value="{{ request.path }}">
-		<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-
-        <hr/>
-
-        <div class="button-group">
-            <a class="button alert">Выйти</a>
-            <a class="button secondary" data-do="profile-cancel">Отменить</a>
-        </div>
-
-	</form>
-
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-        <span aria-hidden="true">&times;</span>
-    </button>
-
+  <div class="content">
+    <form class="ui form">
+      <div class="field">
+        <label>Имя</label>
+        <input id="register-firstname" type="text" placeholder="First Name" />
+      </div>
+      <div class="field">
+        <label>Фамилия</label>
+        <input id="register-lastname" type="text" placeholder="Last Name" />
+      </div>
+      <div class="field">
+        <label>Имя пользователя</label>
+        <input id="register-username" type="text" name="username" placeholder="firstname.lastname" />
+      </div>
+      <div class="field">
+        <label>Электронная почта</label>
+        <input id="register-email" type="email" placeholder="your@email.ru" />
+      </div>
+      <div class="field">
+        <label>Пароль</label>
+        <input id="register-password1" type="password" name="password" placeholder = "Password" />
+      </div>
+      <div class="field">
+        <label>Повторите пароль</label>
+        <input id="register-password2" type="password" placeholder="Password">
+      </div>
+      <div id="modal-register-alert"></div>
+    </form>
+  </div>
+  <div class="actions">
+    <div data-do="register-apply" class="ui positive button">
+      <i class="icon far fa-sign-in"></i>Зарегистрироваться и войти
+    </div>
+    <div class="ui black deny button">
+      <i class="icon far fa-ban"></i>Отмена
+    </div>
+  </div>
 </div>
 
 {% else %}
+<!-- Авторизация -->
+<div id="modal-login" class="ui modal">
+  <i class="close icon"></i>
 
-<div id="modal-login" class="reveal" data-reveal>
+  <div id="modal-login-header" class="header">Авторизация</div>
 
-	<form method="post">
-
-		<fieldset>
-
-			<legend>Войти</legend>
-			<label>Имя пользователя
-				<input
-					id          = "login-username"
-					name        = "username"
-					type        = "text"
-					placeholder = "login">
-			</label>
-			<label>Пароль
-				<input
-					id          = "login-password"
-					name        = "password"
-					type        = "password"
-					placeholder = "password">
-			</label>
-		</fieldset>
-
-		<div id = "modal-login-alert"></div>
-
-		<p><a data-do = "login-restore-password">Восстановить пароль.</a></p>
-		<button data-do = "login-apply">Войти</button>
-		<button data-do = "login-cancel" class="secondary">Отмена</button>
-	</form>
-	<a class="close-reveal-modal">&#215;</a>
+  <div class="content">
+    <form class="ui form">
+      <div class="field">
+        <label>Имя пользователя</label>
+        <input id="login-username" name="username" type="text" placeholder="login" />
+      </div>
+      <div class="field">
+        <label>Пароль</label>
+        <input id="login-password" name="password" type="password" placeholder="password" />
+      </div>
+      <div class="ui message">
+        <div class="header">Также можно:</div>
+        <ul class="list">
+          <li><a href="#" data-do="open-password-recovery">Восстановить пароль</a></li>
+          <li><a href="#" data-do="open-register">Зарегистрироваться</a></li>
+        </ul>
+      </div>
+    </form>
+  </div>
+  <div id="modal-login-alert"></div>
+  <div class="actions">
+    <div data-do="apply-login" class="ui positive button">
+      <i class="icon far fa-sign-in"></i>Войти
+    </div>
+    <div class="ui black deny button">
+      <i class="icon far fa-ban"></i>Отмена
+    </div>
+  </div>
 </div>
-
-<!-- Модальное окно регистрации -->
-<div id="modal-register" class="reveal-modal large" data-reveal>
-	<form method="post">
-		<fieldset>
-			<legend>Зарегистрироваться</legend>
-
-			<label>Имя
-				<input
-					id          = "register-firstname"
-					name        = "firstname"
-					type        = "text"
-					placeholder = "First Name">
-			</label>
-
-			<label>Фамилия
-				<input
-					id          = "register-lastname"
-					name        = "lastname"
-					type        = "text"
-					placeholder = "Last Name">
-			</label>
-
-			<label>Имя пользователя
-				<input
-					id          = "register-username"
-					name        = "username"
-					type        = "text"
-					placeholder = "firstname.lastname">
-			</label>
-
-			<label>Электронная почта
-				<input
-					id          = "register-email"
-					name        = "email"
-					type        = "email"
-					placeholder = "your@email.ru">
-			</label>
-
-			<label>Пароль
-				<input
-					id          = "register-password1"
-					name        = "password1"
-					type        = "password"
-					placeholder = "Password">
-			</label>
-
-			<label>Повторите пароль
-				<input
-					id          = "register-password2"
-					name        = "password2"
-					type        = "password"
-					placeholder = "Password">
-			</label>
-		</fieldset>
-
-		<div id = "modal-register-alert"></div>
-
-		<p><a data-do = "view-license">Лицензионное соглашение.</a></p>
-		<button data-do = "register-apply">Зарегистрироваться</button>
-		<button data-do = "register-cancel" class="secondary">Отмена</button>
-	</form>
-	<a class = "close-reveal-modal">&#215;</a>
-</div>
-
 {% endif %}

@@ -93,42 +93,6 @@ def getCategoryTree(tree, parent = None): # TODO Избавиться от ре�
     return tree
 
 
-def login_view(request):
-    "Представление: авторизация пользователя с перенаправлением."
-
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        redirect_url = request.POST.get('redirect')
-        if not redirect_url: redirect_url = '/'
-
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect(redirect_url)
-            else:
-                # TODO Сделать человечный ответ
-                # Пользователь заблокирован
-                return HttpResponse(status = 401)
-        else:
-            # TODO Сделать человечный ответ
-            # Пользователь неавторизован
-            return HttpResponse(status = 401)
-    else:
-        return HttpResponse(status = 400)
-
-
-def logout_view(request):
-    "Представление: выход пользователя с перенаправлением."
-
-    if request.method == 'POST':
-        redirect_url = request.POST.get('redirect')
-        if not redirect_url: redirect_url = '/'
-        logout(request)
-        return HttpResponseRedirect(redirect_url)
-    else:
-        return HttpResponse(status = 400)
 
 
 def ajaxGetArticle(request):
@@ -485,10 +449,8 @@ def logs(request):
     return render(request, 'anodos/logs.html', locals())
 
 
-
-
 def ajax_login(request):
-    "AJAX-представление: Login."
+    "AJAX-представление: Log-in."
 
     import json
     import anodos.models
@@ -513,6 +475,22 @@ def ajax_login(request):
         result = {
             'status'  : 'error',
             'message' : 'Пользователь заблокирован.'}
+
+    return HttpResponse(json.dumps(result), 'application/javascript')
+
+
+def ajax_logout(request):
+    "AJAX-представление: Log-out"
+
+    import json
+    import anodos.models
+
+    if (not request.is_ajax()) or (request.method != 'POST'):
+        return HttpResponse(status = 400)
+
+    logout(request)
+
+    result = {'status' : 'success'}
 
     return HttpResponse(json.dumps(result), 'application/javascript')
 

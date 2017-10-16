@@ -55,10 +55,9 @@
         {% endif %}
 
         {% if user.is_authenticated %}
-        <a href="#" class="item" data-do="open-profile"><i class="far fa-user"></i>&nbsp;{{ user.first_name }} {{ user.last_name }}</a>
+        <a class="item" data-do="open-profile"><i class="far fa-user"></i>&nbsp;{{ user.first_name }} {{ user.last_name }}</a>
         {% else %}
-        <a href="#" class="item" data-do="open-login"><i class="far fa-sign-in"></i>&nbsp;авторизоваться</a>
-        <a href="#" class="item" data-do="open-register">&nbsp;зарегистрироваться</a>
+        <a class="item" data-do="open-login"><i class="far fa-sign-in"></i>&nbsp;авторизоваться</a>
         {% endif %}
 
         <div class="item">
@@ -67,9 +66,7 @@
             <i class="search link icon"></i>
           </div>
         </div>
-
       </div>
-
     </div>
   </div>
 </header>
@@ -93,6 +90,9 @@
   </div>
 </footer>
 
+{% include "anodos/modal/login.html" %}
+{% block modals %}{% endblock %}
+
 <script src="/static/jquery/jquery-3.2.1.min.js"></script>
 <script src="/static/semantic/semantic.min.js"></script>
 <script defer src="/static/fontawesome/packs/regular.min.js"></script>
@@ -105,6 +105,7 @@
 </script>
 <script>
 {% include "anodos/js/main.js" %}
+{% include "anodos/js/login.js" %}
 </script>
 
 </body>

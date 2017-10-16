@@ -27,7 +27,7 @@ urlpatterns = [
 	url(r'^logs/$', anodos.views.logs),
 
 	url(r'^ajax/login/$', anodos.views.ajax_login),
-	url(r'^logout/$', anodos.views.logout_view),
+	url(r'^ajax/logout/$', anodos.views.ajax_logout),
 
 	url(r'^ajax/create-username/$', anodos.views.ajax_create_username),
 	url(r'^ajax/register/$', anodos.views.ajax_register),

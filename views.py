@@ -542,86 +542,51 @@ def ajax_create_username(request):
 def ajax_register(request):
     "AJAX-представление: Register."
 
+    import json
     from django.contrib.auth.models import User
 
     if request.method == 'POST':
-        username  = request.POST.get('username').strip()
+        username = request.POST.get('username').strip()
         password1 = request.POST.get('password1').strip()
         password2 = request.POST.get('password2').strip()
-        email     = request.POST.get('email').strip()
+        email = request.POST.get('email').strip()
         firstname = request.POST.get('firstname').strip()
-        lastname  = request.POST.get('lastname').strip()
-
-        redirect_url = request.POST.get('redirect')
-        if not redirect_url: redirect_url = '/'
-
-        # TODO Проверить вводные данные
+        lastname = request.POST.get('lastname').strip()
 
         if not username:
-            result = {
-                'status'  : 'info',
-                'message' : 'Не указано имя пользователя.'}
+            result = {'status': 'error', 'message': 'Не указано имя пользователя.'}
             return HttpResponse(json.dumps(result), 'application/javascript')
 
         if not password1:
-            result = {
-                'status'  : 'info',
-                'message' : 'Не указан пароль.'}
+            result = {'status': 'error', 'message' : 'Не указан пароль.'}
             return HttpResponse(json.dumps(result), 'application/javascript')
 
         if password1 != password2:
-            result = {
-                'status'  : 'info',
-                'message' : 'Пароли не совпадают.'}
+            result = {'status': 'error', 'message': 'Пароли не совпадают.'}
             return HttpResponse(json.dumps(result), 'application/javascript')
-
-        if not email:
-            result = {
-                'status'  : 'info',
-                'message' : 'Не указана электронная почта (без неё мы не сможем восстановить учётную запись при необходимости).'}
-            return HttpResponse(json.dumps(result), 'application/javascript')
-
-
-
-
 
         try:
             user = User.objects.get(username = username)
+            result = {'status': 'info', 'message': 'Уже есть пользователь с таким именем.'}
+            return HttpResponse(json.dumps(result), 'application/javascript')
+
         except Exception:
             user = User.objects.create_user(
-                username   = username,
-                password   = password1,
-                email      = email,
+                username = username,
+                password = password1,
+                email = email,
                 first_name = firstname,
-                last_name  = lastname)
-            user = authenticate(username=username, password=password1)
-            result = {'status'   : 'success'}
-        else:
-            result = {
-                'status'  : 'info',
-                'message' : 'Уже есть пользователь с таким именем.'}
-
-
-
-
-
-        if user is not None:
-            if user.is_active:
+                last_name = lastname)
+            user = authenticate(username = username, password = password1)
+            if user is None:
+                result = {'status': 'error', 'message': 'Имя пользователя или пароль не корректны.'}
+            elif user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(redirect_url)
+                result = {'status' : 'success'}
             else:
-                # TODO Сделать человечный ответ
-                # Пользователь заблокирован
-                return HttpResponse(status = 401)
-        else:
-            # TODO Сделать человечный ответ
-            # Пользователь неавторизован
-            return HttpResponse(status = 401)
-    else:
-        return HttpResponse(status = 400)
+                result = {'status': 'error', 'message': 'Пользователь заблокирован.'}
 
-
-
+    return HttpResponse(json.dumps(result), 'application/javascript')
 
 
 def fix_username(username):

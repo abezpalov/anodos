@@ -39,52 +39,8 @@
   </div>
 </div>
 
-<!-- Регистрации -->
-<div id="modal-register" class="ui modal">
-  <i class="close icon"></i>
-
-  <div id="modal-login-header" class="header">Регистрация</div>
-
-  <div class="content">
-    <form class="ui form">
-      <div class="field">
-        <label>Имя</label>
-        <input id="register-firstname" type="text" placeholder="First Name" />
-      </div>
-      <div class="field">
-        <label>Фамилия</label>
-        <input id="register-lastname" type="text" placeholder="Last Name" />
-      </div>
-      <div class="field">
-        <label>Имя пользователя</label>
-        <input id="register-username" type="text" name="username" placeholder="firstname.lastname" />
-      </div>
-      <div class="field">
-        <label>Электронная почта</label>
-        <input id="register-email" type="email" placeholder="your@email.ru" />
-      </div>
-      <div class="field">
-        <label>Пароль</label>
-        <input id="register-password1" type="password" name="password" placeholder = "Password" />
-      </div>
-      <div class="field">
-        <label>Повторите пароль</label>
-        <input id="register-password2" type="password" placeholder="Password">
-      </div>
-      <div id="modal-register-alert"></div>
-    </form>
-  </div>
-  <div class="actions">
-    <div data-do="register-apply" class="ui positive button">
-      <i class="icon far fa-sign-in"></i>Зарегистрироваться и войти
-    </div>
-    <div class="ui black deny button">
-      <i class="icon far fa-ban"></i>Отмена
-    </div>
-  </div>
-</div>
-
 {% else %}
+
 <!-- Авторизация -->
 <div id="modal-login" class="ui modal">
   <i class="close icon"></i>
@@ -120,4 +76,50 @@
     </div>
   </div>
 </div>
+
+<!-- Регистрация -->
+<div id="modal-register" class="ui modal">
+  <i class="close icon"></i>
+
+  <div id="modal-login-header" class="header">Регистрация</div>
+
+  <div class="content">
+    <form class="ui form">
+      <div class="field">
+        <label>Имя</label>
+        <input id="register-firstname" type="text" placeholder="First Name" />
+      </div>
+      <div class="field">
+        <label>Фамилия <span class="ui left pointing blue basic label">Необязательное поле</span></label>
+        <input id="register-lastname" type="text" placeholder="Last Name" />
+      </div>
+      <div class="field">
+        <label>Имя пользователя</label>
+        <input id="register-username" type="text" name="username" placeholder="firstname.lastname" />
+      </div>
+      <div class="field">
+        <label>Электронная почта <span class="ui left pointing blue basic label">Необязательное поле</span> <span class="ui left pointing blue basic label">Для оповещений и восстановления пароля</span></label>
+        <input id="register-email" type="email" placeholder="your@email.ru" />
+      </div>
+      <div class="field">
+        <label>Пароль</label>
+        <input id="register-password1" type="password" name="password" placeholder = "Password" />
+      </div>
+      <div class="field">
+        <label>Повторите пароль</label>
+        <input id="register-password2" type="password" placeholder="Password">
+      </div>
+      <div id="modal-register-alert"></div>
+    </form>
+  </div>
+  <div class="actions">
+    <div data-do="register-apply" class="ui positive button">
+      <i class="icon far fa-sign-in"></i>Зарегистрироваться и войти
+    </div>
+    <div class="ui black deny button">
+      <i class="icon far fa-ban"></i>Отмена
+    </div>
+  </div>
+</div>
+
 {% endif %}

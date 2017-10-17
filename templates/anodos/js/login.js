@@ -11,7 +11,7 @@ $("body").delegate("[data-do='apply-logout']", "click", function(){
         csrfmiddlewaretoken : '{{ csrf_token }}'
     },
     function(data) {
-        if ('success' == data.status){
+        if (data.status == 'success'){
             location.reload();
         }
     }, "json");
@@ -29,14 +29,14 @@ $("body").delegate("[data-do='open-login']", "click", function(){
 // Авторизоваться
 $("body").delegate("[data-do='apply-login']", "click", function(){
     $.post('/ajax/login/', {
-        username : $('#login-username').val(),
-        password : $('#login-password').val(),
-        csrfmiddlewaretoken : '{{ csrf_token }}'
+        username: $('#login-username').val(),
+        password: $('#login-password').val(),
+        csrfmiddlewaretoken: '{{ csrf_token }}'
     },
     function(data) {
-        if ('success' == data.status){
+        if (data.status == 'success'){
             location.reload();
-        } else if ('error' == data.status){
+        } else if (data.status == 'error'){
             $('#modal-login-alert').html('<div class="ui message"><i class="close icon"></i><div class="header">Ошибка!</div>' + data.message + '</div>');
         }
     }, "json");
@@ -44,7 +44,7 @@ $("body").delegate("[data-do='apply-login']", "click", function(){
 });
 
 // Открыть окно регистрации
-$("body").delegate("[data-do*='open-register']", "click", function(){
+$("body").delegate("[data-do='open-register']", "click", function(){
     $('#modal-register').modal('show');
     return false;
 });
@@ -57,7 +57,7 @@ $("body").delegate("#register-firstname", "change", function(){
         csrfmiddlewaretoken: '{{ csrf_token }}'
     },
     function(data) {
-        if ('success' == data.status){
+        if (data.status == 'success'){
             $('#register-username').val(data.username);
         }
     }, "json");
@@ -72,7 +72,7 @@ $("body").delegate("#register-lastname", "change", function(){
         csrfmiddlewaretoken: '{{ csrf_token }}'
     },
     function(data) {
-        if ('success' == data.status){
+        if (data.status == 'success'){
             $('#register-username').val(data.username);
         }
     }, "json");
@@ -91,11 +91,10 @@ $("body").delegate("[data-do='register-apply']", "click", function(){
         csrfmiddlewaretoken: '{{ csrf_token }}'
     },
     function(data) {
-        if ('success' == data.status){
-            $('#modal-register').foundation('close');
+        if (data.status == 'success'){
             location.reload();
-        } else if ('error' == data.status){
-            // TODO вывести ошибки
+        } else if (data.status == 'error'){
+            $('#modal-register-alert').html('<div class="ui message"><i class="close icon"></i><div class="header">Ошибка!</div>' + data.message + '</div>');
         }
     }, "json");
     return false;
